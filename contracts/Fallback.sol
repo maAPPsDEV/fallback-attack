@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.5 <0.9.0;
 
-import '@openzeppelin/contracts/utils/math/SafeMath.sol';
-
 contract Fallback {
 
-  using SafeMath for uint256;
   mapping(address => uint) public contributions;
   address payable public owner;
 
@@ -22,11 +19,14 @@ contract Fallback {
     _;
   }
 
+  event NewOwner(address _newOwner);
+
   function contribute() public payable {
     require(msg.value < 0.001 ether);
     contributions[msg.sender] += msg.value;
     if (contributions[msg.sender] > contributions[owner]) {
       owner = payable(msg.sender);
+      emit NewOwner(msg.sender);
     }
   }
 
@@ -41,5 +41,6 @@ contract Fallback {
   fallback() external payable {
     require(msg.value > 0 && contributions[msg.sender] > 0);
     owner = payable(msg.sender);
+    emit NewOwner(msg.sender);
   }
 }

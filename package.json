@@ -2,7 +2,8 @@
   "name": "fallback",
   "version": "1.0.0",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.1.0"
+    "@openzeppelin/contracts": "^4.1.0",
+    "@truffle/contract": "^4.3.19"
   },
   "scripts": {
     "test": "truffle test"
