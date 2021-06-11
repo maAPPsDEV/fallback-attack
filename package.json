@@ -1,0 +1,16 @@
+{
+  "name": "fallback",
+  "version": "1.0.0",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.1.0"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "keywords": [
+    "solidity"
+  ],
+  "author": "tony@maapps.dev",
+  "license": "ISC",
+  "description": "Fallback"
+}
