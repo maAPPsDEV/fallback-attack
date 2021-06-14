@@ -28,7 +28,7 @@ Through the game you will learn a lot of things for building/testing and deployi
 
 **Why do you use `call`?**
 
-You could find the code line that uses `call` function instead of `transfer` or `send` in order to send ether to the target contract.
+You could find the code line that uses `call` function instead of `transfer` or `send` in order to send ether to the target contract in `Hacker.sol`.
 In many documents, `call` is dangerous, and needs care about using it.
 And I do recommend not to use it for your real smart contract. 😄
 
