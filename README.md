@@ -4,7 +4,7 @@ _Inspired by OpenZeppelin's [Ethernaut](https://ethernaut.openzeppelin.com/level
 ⚠️Do not try on mainnet!
 
 ## Task
-There is a contract written by the following source code. Look carefully at the source code, and attack it.
+There is a contract written by the following source code. Look carefully at the source code, find risks, and attack it.
 1. Claim the owner
 2. Make the contract's balance to 0
 
