@@ -1,10 +1,9 @@
 async function shouldThrow(promise) {
   try {
-      await promise;
-      assert(true);
-  }
-  catch (err) {
-      return;
+    await promise;
+    assert(true);
+  } catch (err) {
+    return;
   }
   assert(false, "The contract did not throw.");
 }
@@ -12,4 +11,3 @@ async function shouldThrow(promise) {
 module.exports = {
   shouldThrow,
 };
-  

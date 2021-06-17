@@ -1,28 +1,34 @@
 # Solidity game - Fallback
+
 _Inspired by OpenZeppelin's [Ethernaut](https://ethernaut.openzeppelin.com/level/0x9CB391dbcD447E645D6Cb55dE6ca23164130D008), Fallback Level_
 
 ⚠️Do not try on mainnet!
 
 ## Task
+
 There is a contract written by the following source code. Look carefully at the source code, find risks, and attack it.
+
 1. Claim the owner
 2. Make the contract's balance to 0
 
 _Hint:_
+
 1. `payable` function can receive ether
 2. `fallback` function can receive ether
 
 ## What will you learn?
+
 Through the game you will learn a lot of things for building/testing and deploying smart contract written in Solidity.
+
 - Solidity
-  * how to interact with another contract - `interface`
-  * how to send ether to another contract - `payable`
-  * difference between transfer or send vs call - `address.call`
-  * gas allocation
+  - how to interact with another contract - `interface`
+  - how to send ether to another contract - `payable`
+  - difference between transfer or send vs call - `address.call`
+  - gas allocation
 - Truffle
-  * configure
-  * test
-  * deploy on public net
+  - configure
+  - test
+  - deploy on public net
 
 ## What is the most difficult challenge?
 
@@ -48,13 +54,13 @@ But `trasfer` and `send` functions are limited with 2300 gas stipend and not adj
 With `call` you can adjust the amount gas used in the called contract, and the sufficient amount of gas will allow the target contract to replace the owner, ultimately you will get success on the attack.
 
 ## Source Code
+
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.5 <0.9.0;
 
 contract Fallback {
-
-  mapping(address => uint) public contributions;
+  mapping(address => uint256) public contributions;
   address payable public owner;
 
   constructor() {
@@ -63,10 +69,7 @@ contract Fallback {
   }
 
   modifier onlyOwner {
-    require(
-      msg.sender == owner,
-      "caller is not the owner"
-    );
+    require(msg.sender == owner, "caller is not the owner");
     _;
   }
 
@@ -81,7 +84,7 @@ contract Fallback {
     }
   }
 
-  function getContribution() public view returns (uint) {
+  function getContribution() public view returns (uint256) {
     return contributions[msg.sender];
   }
 
@@ -95,17 +98,21 @@ contract Fallback {
     emit NewOwner(msg.sender);
   }
 }
+
 ```
 
 ## Configuration
 
 ### Install Truffle cli
+
 _Skip if you have already installed._
+
 ```
 npm install -g truffle
 ```
 
 ### Install Dependencies
+
 ```
 npm install
 ```
@@ -113,6 +120,7 @@ npm install
 ## Deploy on local Ganache and Attack!💥
 
 Start with staring Truffle console.
+
 ```
 truffle console
 truffle(development)> migrate --reset
@@ -122,7 +130,9 @@ truffle(development)> const targetInstance = await Fallback.deployed()
 truffle(development)> const hackerInstance = await Hacker.deployed()
 truffle(development)> await hackerInstance.attack(Fallback.address, {from: hacker, value: web3.utils.toWei("1", "ether")})
 ```
+
 Then you should see like:
+
 ```
 {
   tx: '0xee2ae07bf1379a9f196d1d16cdb9e21a898ed0c20eb45eb8b588e321d64a70e6',
@@ -146,6 +156,7 @@ Then you should see like:
 ```
 
 Check if the attack has been successful.
+
 ```
 truffle(development)> const targetOwner = await targetInstance.owner()
 truffle(development)> targetOwner === hackerInstance.address
@@ -158,6 +169,7 @@ truffle(development)> balance.toString()
 ## Test
 
 ### Run Tests
+
 ```
 truffle test
 ```
@@ -167,93 +179,94 @@ truffle test
 The `Fallback` contract has been deployed at `0x47731653fFd286D6f218a2b5b0aB509F54da5C54` in `ropsten` net.
 
 ABI:
+
 ```json
 [
-    {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "_newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "NewOwner",
-      "type": "event"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "fallback",
-      "payable": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "contributions",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address payable",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "contribute",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function",
-      "payable": true
-    },
-    {
-      "inputs": [],
-      "name": "getContribution",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "withdraw",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "NewOwner",
+    "type": "event"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "fallback",
+    "payable": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "contributions",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address payable",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "contribute",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [],
+    "name": "getContribution",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
 ```

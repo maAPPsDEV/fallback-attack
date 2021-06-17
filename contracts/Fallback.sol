@@ -2,8 +2,7 @@
 pragma solidity >=0.8.5 <0.9.0;
 
 contract Fallback {
-
-  mapping(address => uint) public contributions;
+  mapping(address => uint256) public contributions;
   address payable public owner;
 
   constructor() {
@@ -12,10 +11,7 @@ contract Fallback {
   }
 
   modifier onlyOwner {
-    require(
-      msg.sender == owner,
-      "caller is not the owner"
-    );
+    require(msg.sender == owner, "caller is not the owner");
     _;
   }
 
@@ -30,7 +26,7 @@ contract Fallback {
     }
   }
 
-  function getContribution() public view returns (uint) {
+  function getContribution() public view returns (uint256) {
     return contributions[msg.sender];
   }
 
